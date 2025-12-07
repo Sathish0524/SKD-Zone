@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKD Entertainment - TV | Sports | Anime | Series | TV Shows</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #667eea, #fd79a8, #fdcb6e);
+            background-size: 900% 900%;
+            animation: gradientShift 30s ease infinite;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 1;
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #f9ca24, #f0932b, #eb4d4b, #6c5ce7, #fd79a8, #00b894);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 35px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .btn-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 20px 32px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            color: white;
+            border: 2px solid transparent;
+        }
+        
+        .btn-tv {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24, #ff8e53);
+            animation: slideInLeft 1s ease 0.6s forwards;
+        }
+        
+        .btn-sports {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d, #55e6c1);
+            animation: slideInRight 1s ease 0.9s forwards;
+        }
+        
+        .btn-anime {
+            background: linear-gradient(45deg, #a55eea, #6c5ce7, #a29bfe);
+            animation: slideInUp 1s ease 1.2s forwards;
+        }
+        
+        .btn-series {
+            background: linear-gradient(45deg, #fd79a8, #e84393, #ff7675);
+            animation: bounceIn 1s ease 1.5s forwards;
+        }
+        
+        .btn-shows {
+            background: linear-gradient(45deg, #00b894, #00a085, #00cec9);
+            animation: pulseIn 1s ease 1.8s forwards;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.7s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-10px) scale(1.08);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-3px) scale(0.98);
+        }
+        
+        .features {
+            display: grid;
+            gap: 22px;
+            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            margin-top: 25px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 2.3s forwards;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.18);
+            padding: 16px 26px;
+            border-radius: 28px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            animation: float 4s ease-in-out infinite;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .feature:hover {
+            transform: scale(1.08);
+            background: rgba(255, 255, 255, 0.28);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature:nth-child(1) { animation-delay: 0s; }
+        .feature:nth-child(2) { animation-delay: 0.2s; }
+        .feature:nth-child(3) { animation-delay: 0.4s; }
+        .feature:nth-child(4) { animation-delay: 0.6s; }
+        .feature:nth-child(5) { animation-delay: 0.8s; }
+        .feature:nth-child(6) { animation-delay: 1s; }
+        
+        /* DESKTOP VIEW (>1024px) */
+        @media (min-width: 1025px) {
+            .container { max-width: 1400px; padding: 40px; }
+            .logo { font-size: 5rem; line-height: 1.1; }
+            .tagline { font-size: 1.6rem; max-width: 800px; }
+            .btn-group { 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 30px; max-width: 1400px; 
+                padding: 0 20px;
+            }
+            .btn { padding: 24px 40px; font-size: 1.2rem; min-height: 80px; }
+            .features { 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 25px; max-width: 1000px; 
+            }
+        }
+        
+        /* TABLET VIEW (481px - 1024px) */
+        @media (max-width: 1024px) and (min-width: 481px) {
+            .container { padding: 30px 25px; }
+            .logo { font-size: 3.8rem; }
+            .tagline { font-size: 1.4rem; }
+            .btn-group { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 25px; max-width: 800px; 
+            }
+            .btn { padding: 20px 35px; font-size: 1.1rem; }
+            .features { 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 20px; max-width: 700px; 
+            }
+            .feature { padding: 15px 22px; font-size: 0.95rem; }
+        }
+        
+        /* MOBILE VIEW (≤480px) */
+        @media (max-width: 480px) {
+            body { overflow-x: hidden; }
+            .container { 
+                padding: 20px 15px; 
+                height: 100vh; 
+                justify-content: flex-start; 
+                padding-top: 80px;
+            }
+            .logo { 
+                font-size: 2.4rem; 
+                margin-bottom: 12px; 
+                line-height: 1.1;
+            }
+            .tagline { 
+                font-size: 1.15rem; 
+                margin-bottom: 25px; 
+                padding: 0 10px;
+            }
+            .btn-group { 
+                grid-template-columns: 1fr; 
+                gap: 18px; 
+                max-width: 340px; 
+                width: 100%; 
+                padding: 0 5px;
+            }
+            .btn { 
+                padding: 18px 25px; 
+                font-size: 1rem; 
+                width: 100%; 
+                min-height: 65px;
+            }
+            .features { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 12px; 
+                margin-top: 25px; 
+                padding: 0 5px;
+            }
+            .feature { 
+                padding: 12px 18px; 
+                font-size: 0.9rem; 
+                border-radius: 20px;
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            16% { background-position: 100% 50%; }
+            33% { background-position: 100% 100%; }
+            50% { background-position: 0% 100%; }
+            66% { background-position: 0% 50%; }
+            83% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 15px #f9ca24); }
+            to { filter: drop-shadow(0 0 35px #f9ca24); }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateY(0) translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateY(0) translateX(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3) translateY(20px); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        @keyframes pulseIn {
+            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.6); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes particleBurst {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--dx), var(--dy)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="logo">SKD Entertainment</div>
+        <div class="tagline">Your Ultimate Destination for All Entertainment</div>
+        
+        <div class="btn-group">
+            <a href="https://skd-mediaplayer.vercel.app/" class="btn btn-tv" target="_blank" rel="noopener noreferrer">
+                📺 Watch Live TV
+            </a>
+            <a href="https://www.livecricketstreaming.cc/home" class="btn btn-sports" target="_blank" rel="noopener noreferrer">
+                ⚽ Watch Live Sports
+            </a>
+            <a href="https://watchanimeworld.in/" class="btn btn-anime" target="_blank" rel="noopener noreferrer">
+                🎌 Watch Anime
+            </a>
+            <a href="https://net20.cc/home" class="btn btn-series" target="_blank" rel="noopener noreferrer">
+                📺 Web Series
+            </a>
+            <a href="https://arivumani.net/" class="btn btn-shows" target="_blank" rel="noopener noreferrer">
+                📺 TV Shows
+            </a>
+        </div>
+        
+        <div class="features">
+            <div class="feature">✨ HD Quality</div>
+            <div class="feature">🚀 Instant Redirect</div>
+            <div class="feature">📱 Mobile Friendly</div>
+            <div class="feature">🌟 Latest Content</div>
+            <div class="feature">🎬 All Genres</div>
+            <div class="feature">✅ 100% Working</div>
+        </div>
+    </div>
+
+    <script>
+        // Create twinkling stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 180; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Initialize stars
+        window.addEventListener('load', function() {
+            createStars();
+        });
+        
+        // Particle effect on button click
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                createClickParticles(this);
+            });
+        });
+        
+        function createClickParticles(element) {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                const size = Math.random() * 6 + 4;
+                const dx = (Math.random() - 0.5) * 120;
+                const dy = (Math.random() - 0.5) * 120;
+                
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: rgba(255,255,255,0.9);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1000;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    --dx: ${dx}px;
+                    --dy: ${dy}px;
+                    animation: particleBurst 0.7s ease-out forwards;
+                `;
+                element.style.position = 'relative';
+                element.appendChild(particle);
+                setTimeout(() => particle.remove(), 700);
+            }
+        }
+    </script>
+</body>
+</html>
